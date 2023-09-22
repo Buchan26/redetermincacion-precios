@@ -1,1 +1,1 @@
-worker python redetereminacion-precios.py
+worker: python redetereminacion-precios.py
