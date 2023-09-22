@@ -1,2 +1,4 @@
 pandas==1.4.1
 requests==2.28.2
+smtplib
+email
