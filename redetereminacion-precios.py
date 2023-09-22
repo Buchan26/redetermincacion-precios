@@ -146,6 +146,5 @@ def send_email(send_to, subject, df):
         server.quit()
 
 
-if "__name__" == "__main__":
-    df = redeterminacion()
-    send_email(["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
+df = redeterminacion()
+send_email(["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
