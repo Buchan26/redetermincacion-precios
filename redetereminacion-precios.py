@@ -150,5 +150,5 @@ def send_email(send_to, subject, df):
 
 if datetime.now().day == 22:
     print("probando, probando")
-    df = redeterminacion()
-    send_email(["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
+    # df = redeterminacion()
+    # send_email(["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
