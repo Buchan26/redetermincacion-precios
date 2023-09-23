@@ -8,6 +8,7 @@ from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+from datetime import datetime
 
 mapa = {
 'Ene*':'Ene',
@@ -145,6 +146,9 @@ def send_email(send_to, subject, df):
         server.sendmail(multipart["From"], multipart["To"], multipart.as_string())
         server.quit()
 
-if "__name__" == "__main__":
+
+
+if datetime.now().day == 22:
+    print("probando, probando")
     df = redeterminacion()
     send_email(["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
