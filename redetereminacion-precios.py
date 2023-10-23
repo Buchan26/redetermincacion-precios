@@ -1,6 +1,5 @@
 import pandas as pd
 import requests
-import io
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -8,7 +7,17 @@ from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-from datetime import datetime
+
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+current_dir = Path(__file__).resolve().parent if "__file__" in locals() else Path.cwd()
+envars = current_dir / ".env"
+load_dotenv(envars)
+
+sender_email = os.getenv("EMAIL")
+password_email = os.getenv("PASSWORD")
 
 mapa = {
 'Ene*':'Ene',
@@ -123,13 +132,12 @@ def redeterminacion():
     
     return df1
 
-
-def send_email(send_to, subject, df):
-    send_from = "riquelmesebas412@gmail.com"
-    password = "wamm vzam eskg gudb"
+def send_email(sender_email, password_email, send_to, subject, df):
+    send_from = sender_email
+    password = password_email
     message = """    <p><strong>Redeterminación de precios&nbsp;</strong></p>
     <p><br></p>
-    <p><strong>Saludos&nbsp;</strong><br><strong>Esteban&nbsp;    </strong></p>
+    <p><strong>Saludos&nbsp;</strong><br><strong>La administración&nbsp;    </strong></p>
     """
     for receiver in send_to:
         multipart = MIMEMultipart()
@@ -148,7 +156,8 @@ def send_email(send_to, subject, df):
 
 
 
-if datetime.now().day == 22:
-    print("probando, probando")
-    # df = redeterminacion()
-    # send_email(["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
+@app.lib.cron()
+def cron_job(event):
+    df = redeterminacion()
+    send_email(sender_email, password_email, ["masuelliesteban@gmail.com"], "Redeterminacion de precios " + df.columns[2], df)
+    return None
